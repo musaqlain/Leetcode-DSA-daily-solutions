@@ -5,8 +5,7 @@ public:
         int it = s.size()-1;
         while (it>=0 && s[it] == ' ') it--;
         while(it>=0 && s[it] != ' ') {
-            it--;
-            count++;
+            it--, count++;
         }
 
         return count;
