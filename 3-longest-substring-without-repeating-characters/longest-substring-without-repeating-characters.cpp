@@ -6,7 +6,7 @@ public:
         string holder;
 
         for (int i=0;i<s.size();i++){
-            size_t pos = holder.find(s[i]);
+            int pos = holder.find(s[i]);
             if (pos == -1) {
                 holder += s[i];
                 longest = max(longest, static_cast<int>(holder.size()));
