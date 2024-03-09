@@ -15,14 +15,11 @@ public:
         }
 
         while (i < n && isdigit(s[i])) {
-            int digit = s[i++] - '0';
+            atoi = atoi * 10;
 
-            // Check for overflow
-            if (atoi > (LLONG_MAX - digit) / 10) {
-                return (sign == 1) ? INT_MAX : INT_MIN;
-            }
+            if (atoi<INT_MIN || atoi>INT_MAX) break;
 
-            atoi = atoi * 10 + digit;
+            atoi = atoi + (s[i++] - '0');
         }
 
         if (sign * atoi > INT_MAX) {
