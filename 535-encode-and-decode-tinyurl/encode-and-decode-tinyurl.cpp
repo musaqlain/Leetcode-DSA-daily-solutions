@@ -2,7 +2,7 @@ class Solution {
 public:
     unordered_map<string, string> encodeMp; // longUrl
     unordered_map<string, string> decodeMp; // shortUrl
-    string service = "http://tinyurl.com/";
+    const string service = "http://tinyurl.com/";
 
     // Encodes a URL to a shortened URL.
     string encode(string longUrl) {
