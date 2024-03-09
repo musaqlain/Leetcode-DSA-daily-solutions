@@ -16,14 +16,14 @@ private:
             res.push_back(current);
             return;
         }
+        if (o > c) {
+            current.push_back(')');
+            backtrack(current, o, c + 1, res, n);
+            current.pop_back();
+        }
         if (o < n) {
             current.push_back('(');
             backtrack(current, o + 1, c, res, n);
-            current.pop_back();
-        }
-        if (c < o) {
-            current.push_back(')');
-            backtrack(current, o, c + 1, res, n);
             current.pop_back();
         }
     }
