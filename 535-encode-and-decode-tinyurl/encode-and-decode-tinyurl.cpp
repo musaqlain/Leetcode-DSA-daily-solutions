@@ -1,19 +1,21 @@
 class Solution {
 public:
-    unordered_map<string, string> mp;
-    int count = 0;
+    unordered_map<string, string> encodeMp; // longUrl
+    unordered_map<string, string> decodeMp; // shortUrl
+    string service = "http://tinyurl.com/";
+
     // Encodes a URL to a shortened URL.
     string encode(string longUrl) {
-        string service = "http://tinyurl.com/";
-        string shortUrl = service + to_string(count);
-        mp[shortUrl] = longUrl;
-        return shortUrl;
+        if (encodeMp.find(longUrl) == encodeMp.end()) {
+            string shortUrl = service + to_string(encodeMp.size() + 1);
+            encodeMp[longUrl] = shortUrl;
+            decodeMp[shortUrl] = longUrl;
+        }
+        return encodeMp[longUrl];
     }
 
     // Decodes a shortened URL to its original URL.
-    string decode(string shortUrl) {
-        return mp[shortUrl];
-    }
+    string decode(string shortUrl) { return decodeMp[shortUrl]; }
 };
 
 // Your Solution object will be instantiated and called as such:
