@@ -1,8 +1,10 @@
 class Solution {
 public:
     double angleClock(int hour, int minutes) {
-        int dom = minutes*6;
-        double doh = hour*30 + minutes*0.5;
-        return min(abs(doh-dom) , 360-abs(doh-dom));
+        int dom = 6*minutes;
+        double doh = (30*hour)+(0.5*minutes);
+        double diff = abs(doh-dom);
+
+        return min(diff, 360-diff);
     }
 };
