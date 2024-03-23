@@ -1,25 +1,17 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-        if (nums.size() == 0) return 0;
-        set<int> st;
-        vector<int> holder;
+        const int n = nums.size();
+        if (n == 0) return 0;
+        sort(nums.begin(), nums.end());
 
-        for(auto i:nums) {
-            st.insert(i);
-        }
-
-        for (auto& i:st) {
-            holder.push_back(i);
-        }
-
-        if (holder.size() == 1) return 1;
         int count=1, large=1;
-        for (int i=1; i<holder.size(); i++) {
-            if (holder[i]-1 == holder[i-1]) {
+
+        for (int i=1; i<n; i++) {
+            if (nums[i]-1 == nums[i-1]) {
                 count++;
                 large = max(large, count);
-            } else {
+            } else if (nums[i-1] != nums[i]) {
                 count = 1;
             }
         }
