@@ -6,14 +6,12 @@ private:
 
         stack<int> stk;
         for (int i = 0; i < n; ++i) {
-            // cout<<"res[i]"<<res[i]<<endl;
             while (!stk.empty() && height[i] < height[stk.top()]) {
                 res[stk.top()] = i;
                 stk.pop();
             }
             stk.push(i);
         }
-
         return res;
     }
 
@@ -23,14 +21,12 @@ private:
 
         stack<int> stk;
         for (int i = n - 1; i >= 0; --i) {
-            cout<<"res[i]"<<res[i]<<endl;
             while (!stk.empty() && height[i] < height[stk.top()]) {
                 res[stk.top()] = i;
                 stk.pop();
             }
             stk.push(i);
         }
-
         return res;
     }
 
@@ -41,9 +37,6 @@ public:
 
         int res = 0;
         for (int i = 0; i < heights.size(); ++i) {
-            // cout<<"ns[i]"<<ns[i]<<endl;
-            // cout<<"ps[i]"<<ps[i]<<endl;
-            
             int area = (ns[i] - ps[i] - 1) * heights[i];
             res = max(res, area);
         }
