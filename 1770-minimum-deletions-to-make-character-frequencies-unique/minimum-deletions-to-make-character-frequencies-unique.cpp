@@ -1,23 +1,20 @@
-// this solution is based on used frequescies and unused frequencies
 class Solution {
 public:
     int minDeletions(string s) {
-        unordered_map<char, int> mp;
-        for (char& c : s)
-            mp[c]++;
+        vector<int> freq(26,0);
+        for (char& c:s) freq[c-'a']++;
 
-        unordered_set<int> st;
+        sort(freq.begin(), freq.end());
+        int res = 0;
 
-        int deletions = 0;
-
-        for (auto& [c, freq] : mp) {
-            while (st.count(freq) && freq > 0) {
-                freq--, deletions++;
+        for (int i=24; i>=0; i--){
+            if (freq[i] >= freq[i+1]) {
+                int prev = freq[i];
+                freq[i] = max(0, freq[i+1] -1);
+                res += prev - freq[i];
             }
-            if (freq > 0)
-                st.insert(freq);
         }
 
-        return deletions;
+        return res;
     }
 };
