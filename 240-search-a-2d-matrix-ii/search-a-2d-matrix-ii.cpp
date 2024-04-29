@@ -11,9 +11,9 @@ public:
             if (s == target) {
                 return true;
             } else if (s < target) {
-                m = m + 1;
+                m++;
             } else {
-                n = n - 1;
+                n--;
             }
         }
 
