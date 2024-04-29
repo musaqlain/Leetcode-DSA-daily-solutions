@@ -2,19 +2,16 @@ class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
         const int size = matrix.size();
-        int m=0, n=matrix[0].size() - 1;
-        int s = 0;
+        int m = 0, n = matrix[0].size() - 1;
 
-        while (n>=0 && m<size) {
-            s = matrix[m][n];
+        while (n >= 0 && m < size) {
 
-            if (s == target) {
+            if (matrix[m][n] == target)
                 return true;
-            } else if (s < target) {
+            if (matrix[m][n] < target)
                 m++;
-            } else {
+            else
                 n--;
-            }
         }
 
         return false;
