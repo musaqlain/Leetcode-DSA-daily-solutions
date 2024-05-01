@@ -9,7 +9,6 @@ public:
 
     string get(string key, int timestamp) {
         if (mp.find(key) != mp.end()) {
-            // Binary Search
             vector<pair<int, string>>& valObj = mp[key];
             int l = 0, r = valObj.size() - 1;
 
@@ -29,10 +28,3 @@ public:
         return "";
     }
 };
-
-/**
- * Your TimeMap object will be instantiated and called as such:
- * TimeMap* obj = new TimeMap();
- * obj->set(key,value,timestamp);
- * string param_2 = obj->get(key,timestamp);
- */
