@@ -1,30 +1,20 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        unordered_map<char, int> mp;
-        int maxFreq = 0, maxLength = 0;
-        int l = 0, r = 0;
+        vector<int> hash(26, 0);
+        int maxCount = 0, maxLength = 0, start = 0;
 
-        while (r < s.size()) {
-            mp[s[r]]++;
-            maxFreq = max(maxFreq, mp[s[r]]);
-            int changes = (r - l + 1) - maxFreq;
+        for (int end = 0; end < s.size(); end++) {
+            hash[s[end] - 'A']++;
 
-            while (changes > k) {
-                mp[s[l]]--;
-                if (mp[s[l]] == 0) {
-                    int newMaxFreq = 0;
-                    for (auto& it : mp) {
-                        newMaxFreq = max(newMaxFreq, it.second);
-                    }
-                    maxFreq = newMaxFreq;
-                }
-                l++;
-                changes = (r - l + 1) - maxFreq;
-            }
+            maxCount = max(maxCount, hash[s[end] - 'A']);
             
-            maxLength = max(maxLength, r - l + 1);
-            r++;
+            while (end - start + 1 - maxCount > k) {
+                hash[s[start] - 'A']--;
+                start++;
+            }
+
+            maxLength = max(maxLength, end - start + 1);
         }
 
         return maxLength;
