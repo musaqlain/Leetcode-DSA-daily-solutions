@@ -1,29 +1,30 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        vector<int> count(26, 0); // to store the frequency of characters
-        int maxCount = 0;  // to store the maximum frequency of any character
-        int maxLength = 0; // to store the maximum length of the substring
+        unordered_map<char, int> mp;
+        int maxFreq = 0, maxLength = 0;
+        int l = 0, r = 0;
 
-        int start = 0; // start of the window
+        while (r < s.size()) {
+            mp[s[r]]++;
+            maxFreq = max(maxFreq, mp[s[r]]);
+            int changes = (r - l + 1) - maxFreq;
 
-        for (int end = 0; end < s.size(); ++end) {
-            maxCount =
-                max(maxCount,
-                    ++count[s[end] - 'A']); // update the frequency of the
-                                            // current character and maxCount
-
-            // if the size of the window minus the maximum frequency is greater
-            // than k, we need to shrink the window from the start
-            while (end - start + 1 - maxCount > k) {
-                --count[s[start] -
-                        'A']; // remove the character at the start of the window
-                ++start;      // move the start of the window forward
+            while (changes > k) {
+                mp[s[l]]--;
+                if (mp[s[l]] == 0) {
+                    int newMaxFreq = 0;
+                    for (auto& it : mp) {
+                        newMaxFreq = max(newMaxFreq, it.second);
+                    }
+                    maxFreq = newMaxFreq;
+                }
+                l++;
+                changes = (r - l + 1) - maxFreq;
             }
-
-            maxLength = max(
-                maxLength,
-                end - start + 1); // update the maximum length of the substring
+            
+            maxLength = max(maxLength, r - l + 1);
+            r++;
         }
 
         return maxLength;
