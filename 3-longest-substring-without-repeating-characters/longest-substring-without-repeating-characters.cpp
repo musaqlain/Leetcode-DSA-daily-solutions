@@ -1,18 +1,20 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        // s = "dvdf"
-        int longest = 0;
-        string holder;
+        unordered_set<char> st;
+        int longest=0;
+        int start=0;
 
-        for (int i=0;i<s.size();i++){
-            size_t pos = holder.find(s[i]);
-            if (pos == -1) {
-                holder += s[i];
-                longest = max(longest, static_cast<int>(holder.size()));
-            }else {
-                holder.erase(0, pos+1);
-                holder += s[i];
+        for (int end=0; end<s.size(); ++end) {
+            if (st.find(s[end]) == st.end()) {
+                st.insert(s[end]);
+                longest = max(longest, end-start+1);
+            } else {
+                while (s[start] != s[end]) {
+                    st.erase(s[start]);
+                    start++;
+                }
+                start++;
             }
         }
 
