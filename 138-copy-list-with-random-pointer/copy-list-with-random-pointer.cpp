@@ -1,19 +1,3 @@
-/*
-// Definition for a Node.
-class Node {
-public:
-    int val;
-    Node* next;
-    Node* random;
-    
-    Node(int _val) {
-        val = _val;
-        next = NULL;
-        random = NULL;
-    }
-};
-*/
-
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
@@ -36,17 +20,19 @@ public:
             tmp=tmp->next->next;
         }
 
-        // connect next pointers and extract the newly created list
-        tmp=head;
-        Node* rNode = new Node(-1);
-        Node* res = rNode;
-        while (tmp != nullptr && res != nullptr) {
-            res->next = tmp->next;
+        // Step 3: Separate the lists
+        tmp = head;
+        Node* newHead = head->next;
+        Node* copy = newHead;
+        while (tmp != nullptr && copy != nullptr) {
             tmp->next = tmp->next->next;
-            res = res->next;
-            tmp=tmp->next;
+            if (copy->next != nullptr) {
+                copy->next = copy->next->next;
+            }
+            tmp = tmp->next;
+            copy = copy->next;
         }
 
-        return rNode->next;
+        return newHead;;
     }
 };
