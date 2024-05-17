@@ -17,24 +17,36 @@ public:
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-        unordered_map<Node*, Node*> mp;
+        if (!head) return nullptr;
+        // insert copied node inbetween
         Node* tmp = head;
-
         while (tmp != nullptr) {
             Node* newNode = new Node(tmp->val);
-            mp[tmp] = newNode;
-            tmp = tmp->next;
+            newNode->next = tmp->next;
+            tmp->next = newNode;
+            tmp=tmp->next->next;
         }
 
+        // connect random pointers
         tmp=head;
-        while(tmp != nullptr) {
-            Node* curr = mp[tmp];
-            curr->next = mp[tmp->next];
-            curr->random = mp[tmp->random];
-            
-            tmp = tmp->next;
+        while (tmp!=nullptr) {
+            if (tmp->random != nullptr) {
+                tmp->next->random = tmp->random->next;
+            }
+            tmp=tmp->next->next;
         }
 
-        return mp[head];
+        // connect next pointers and extract the newly created list
+        tmp=head;
+        Node* rNode = new Node(-1);
+        Node* res = rNode;
+        while (tmp != nullptr && res != nullptr) {
+            res->next = tmp->next;
+            tmp->next = tmp->next->next;
+            res = res->next;
+            tmp=tmp->next;
+        }
+
+        return rNode->next;
     }
 };
