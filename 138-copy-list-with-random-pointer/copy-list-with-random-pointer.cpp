@@ -29,12 +29,9 @@ public:
         tmp=head;
         while(tmp != nullptr) {
             Node* curr = mp[tmp];
-            Node* nexx = mp[tmp->next];
-            Node* rann = mp[tmp->random];
+            curr->next = mp[tmp->next];
+            curr->random = mp[tmp->random];
             
-            curr->next = nexx;
-            curr->random = rann;
-
             tmp = tmp->next;
         }
 
