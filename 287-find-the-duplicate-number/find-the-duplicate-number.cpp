@@ -15,9 +15,9 @@ public:
             slow=nums[slow];
             fast=nums[fast];
 
-            if (slow==fast) break;
+            if (slow==fast) return slow;
         }
 
-        return slow;
+        return 1;
     }
 };
