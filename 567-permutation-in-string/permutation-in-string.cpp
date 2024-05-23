@@ -1,25 +1,30 @@
 class Solution {
+private:
+    bool comp(vector<int>& hashS1, vector<int>& hashS2) {
+        for (int i=0; i<26; i++) {
+            if (hashS1[i]!=hashS2[i]) return false;
+        }
+        return true;
+    }
 public:
     bool checkInclusion(string s1, string s2) {
-        const int n1 = s1.size();
-        const int n2 = s2.size();
-        unordered_map<char, int> mp; // Use char instead of string for character frequency
+        vector<int> hash1(26,0), hash2(26,0);
 
-        // Store frequency of characters in s1
-        for (auto& c : s1) mp[c]++;
+        for (auto& c:s1) hash1[c-'a']++;
 
-        for (int i = 0; i <= n2 - n1; ++i) {
-            unordered_map<char, int> temp = mp; // Create a copy of mp for each window
-            int j = i + n1;
+        int i=0, j=0;
+        int k=s1.size();
 
-            // Check if the characters in the window form a permutation of s1
-            for (int k = i; k < j; ++k) {
-                if (temp[s2[k]] == 0) break; // If character not in s1, move to next window
-                temp[s2[k]]--; // Decrement character count
-                if (k == j - 1) return true; // If all characters encountered, return true
+        while (j<s2.size()) {
+            hash2[s2[j]-'a']++;
+            if (j-i+1 > k) {
+                hash2[s2[i]-'a']--;
+                i++;
             }
+            if (j-i+1 == k && comp(hash1, hash2)) return true;
+            j++;
         }
-        
-        return false; // Return false if no permutation found
+
+        return false;
     }
 };
