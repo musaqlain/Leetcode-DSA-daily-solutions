@@ -10,24 +10,22 @@
  * };
  */
 class Solution {
-private:
-    int depth(TreeNode* node) {
-        // base case
-        if (!node) return 0;
-        return 1+max(depth(node->left), depth(node->right));
-    }
 public:
+    int max_dia = 0;
+    int traverseTree(TreeNode* node) {
+        // basecases
+        if (!node) return 0;
+        if (node->left == NULL && node->right == NULL) return 1;
+
+        int l=traverseTree(node->left);
+        int r=traverseTree(node->right);
+
+        max_dia = max(max_dia, l+r);
+
+        return 1 + max(l, r);
+    }
     int diameterOfBinaryTree(TreeNode* root) {
-        // base case
-        if (!root) return 0;
-
-        int leftDepth = depth(root->left);
-        int rightDepth = depth(root->right);
-
-        int rootDiameter = leftDepth+rightDepth;
-        int leftDiameter = diameterOfBinaryTree(root->left);
-        int rightDiameter = diameterOfBinaryTree(root->right);
-
-        return max({rootDiameter, leftDiameter, rightDiameter});
+        traverseTree(root);
+        return max_dia;
     }
 };
