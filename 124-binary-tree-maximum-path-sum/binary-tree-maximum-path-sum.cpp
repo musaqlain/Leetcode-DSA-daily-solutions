@@ -1,7 +1,6 @@
 class Solution {
 public:
     int maxPathSum(TreeNode* root) {
-
         int maxSum = INT_MIN;
         calculateMaxSum(root, maxSum);
         return maxSum;
