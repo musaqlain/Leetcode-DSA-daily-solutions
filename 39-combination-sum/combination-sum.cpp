@@ -4,6 +4,7 @@ private:
 
 public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        res.clear();
         vector<int> curr;
         dfs(0, target, curr, candidates);
         return res;
