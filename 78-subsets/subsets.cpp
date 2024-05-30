@@ -16,6 +16,7 @@ private:
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
         res.clear();
+        res.reserve(1 << nums.size());
         vector<int> current;
         dfs(nums, current, 0);
 
