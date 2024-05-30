@@ -14,7 +14,6 @@ public:
     string serialize(TreeNode* root) {
         string result;
         serializeHelper(root, result);
-        cout<<result;
         return result;
     }
     void serializeHelper(TreeNode* node, string& result) {
