@@ -1,7 +1,7 @@
 class Solution {
 private:
     vector<vector<int>> res;
-    void dfs(vector<int>& nums, vector<int> current, int i) {
+    void dfs(vector<int>& nums, vector<int>& current, int i) {
         if (i >= nums.size()) {
             res.push_back(current);
             return;
@@ -15,6 +15,7 @@ private:
 
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
+        res.clear();
         vector<int> current;
         dfs(nums, current, 0);
 
