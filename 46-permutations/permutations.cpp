@@ -8,7 +8,7 @@ public:
         dfs(nums, ds, fs);
         return res;
     }
-    void dfs(vector<int>& nums, vector<int> ds, vector<int>& fs) {
+    void dfs(vector<int>& nums, vector<int>& ds, vector<int>& fs) {
         // base condition
         if (ds.size() == nums.size()) {
             res.push_back(ds);
