@@ -1,29 +1,29 @@
 class Solution {
 private:
-    vector<vector<int>> res;
+    vector<vector<int>> result;
 public:
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<int> ds;
-        vector<int> fs(nums.size(), 0);
-        dfs(nums, ds, fs);
-        return res;
+        vector<int> curr;
+        unordered_set<int> st;
+        dfs(nums, curr, st);
+        return result;
     }
-    void dfs(vector<int>& nums, vector<int>& ds, vector<int>& fs) {
-        // base condition
-        if (ds.size() == nums.size()) {
-            res.push_back(ds);
+    void dfs(vector<int>& nums,vector<int>& curr, unordered_set<int>& st ) {
+        // basecase
+        if (curr.size() == nums.size()) {
+            result.push_back(curr);
             return;
         }
 
         // logic
         for (int i=0; i<nums.size(); i++) {
-            if (!fs[i]) {
-                ds.push_back(nums[i]);
-                fs[i] = 1;
-                dfs(nums, ds, fs);
+            if (st.find(nums[i]) == st.end()) {
+                st.insert(nums[i]);
+                curr.push_back(nums[i]);
+                dfs(nums, curr, st);
 
-                fs[i] = 0;
-                ds.pop_back();
+                st.erase(nums[i]);
+                curr.pop_back();
             }
         }
     }
