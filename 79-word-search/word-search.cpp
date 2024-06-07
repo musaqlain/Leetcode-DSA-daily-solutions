@@ -1,39 +1,35 @@
 class Solution {
 public:
     bool exist(vector<vector<char>>& board, string word) {
-        int m = board.size();
-        int n = board[0].size();
-        
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (dfs(board, word, i, j, 0)) {
-                    return true;
+        int cols = board.size();
+        int rows = board[0].size();
+        int index = 0;
+        for (int i=0; i<cols; i++) {
+            for (int j=0; j<rows; j++) {
+                if (board[i][j] == word[index]) {
+                    if (search(board, i, j, word, cols, rows, index)) {
+                        return true;
+                    }
                 }
             }
         }
+
         return false;
     }
-    
-private:
-    bool dfs(vector<vector<char>>& board, const string& word, int i, int j, int index) {
-        if (index == word.size()) {
-            return true;
-        }
-        
-        if (i < 0 || i >= board.size() || j < 0 || j >= board[0].size() || board[i][j] != word[index]) {
-            return false;
-        }
-        
-        char temp = board[i][j];
-        board[i][j] = '#'; // Mark the cell as visited
-        
-        bool found = dfs(board, word, i + 1, j, index + 1) ||
-                     dfs(board, word, i - 1, j, index + 1) ||
-                     dfs(board, word, i, j + 1, index + 1) ||
-                     dfs(board, word, i, j - 1, index + 1);
-        
-        board[i][j] = temp; // Restore the cell
-        
-        return found;
+
+    bool search(vector<vector<char>>& board,int i,int j,string& word,int cols, int rows,int index) {
+        if (index == word.size()) return true;
+        if (i<0||j<0||i>=cols||j>=rows||board[i][j]=='!'||board[i][j]!=word[index]) return false;
+
+        char c = board[i][j];
+        board[i][j] = '!';
+
+        bool top = search(board, i-1, j, word, cols, rows, index+1);
+        bool bottom = search(board, i+1, j, word, cols, rows, index+1);
+        bool left = search(board, i, j-1, word, cols, rows, index+1);
+        bool right = search(board, i, j+1, word, cols, rows, index+1);
+
+        board[i][j] = c;
+        return top||bottom||left||right;
     }
 };
