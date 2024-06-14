@@ -13,16 +13,15 @@ public:
                 }
             }
         }
-
         return false;
     }
 
     bool search(vector<vector<char>>& board,int i,int j,string& word,int cols, int rows,int index) {
         if (index == word.size()) return true;
-        if (i<0||j<0||i>=cols||j>=rows||board[i][j]=='!'||board[i][j]!=word[index]) return false;
+        if (i<0||j<0||i>=cols||j>=rows||board[i][j]=='$'||board[i][j]!=word[index]) return false;
 
         char c = board[i][j];
-        board[i][j] = '!';
+        board[i][j] = '$';
 
         bool top = search(board, i-1, j, word, cols, rows, index+1);
         bool bottom = search(board, i+1, j, word, cols, rows, index+1);
