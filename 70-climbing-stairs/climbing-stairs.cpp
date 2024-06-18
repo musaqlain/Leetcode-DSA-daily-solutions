@@ -3,18 +3,13 @@ public:
     int climbStairs(int n) {
         if (n==1) return 1;
         vector<int> dp(n+1, -1);
-        return dfs(n, 0, dp);
-    }
+        dp[0] = 1;
+        dp[1] = 1;
 
-    int dfs(int n, int total, vector<int>& dp) {
-        // base cases
-        if (total == n) {
-            return 1;
+        for (int i=2; i<=n; i++) {
+          dp[i] = dp[i-1] + dp[i-2];
         }
-        if (total > n) return 0;
 
-        if (dp[total] != -1) return dp[total];
-
-        return dp[total] = dfs(n, total+1, dp) + dfs(n, total+2, dp);
+        return dp[n];
     }
 };
