@@ -1,18 +1,20 @@
 class Solution {
 public:
     int climbStairs(int n) {
+        if (n==1) return 1;
         vector<int> dp(n+1, -1);
         return dfs(n, 0, dp);
     }
 
-    int dfs(int n, int start, vector<int> &dp) {
-        if (start > n) return 0;
-        if (start == n) return 1;
+    int dfs(int n, int total, vector<int>& dp) {
+        // base cases
+        if (total == n) {
+            return 1;
+        }
+        if (total > n) return 0;
 
-        if (dp[start]!=-1) return dp[start];
+        if (dp[total] != -1) return dp[total];
 
-        dp[start] = dfs(n,start+1, dp) + dfs(n,start+2, dp);
-
-        return dp[start];
+        return dp[total] = dfs(n, total+1, dp) + dfs(n, total+2, dp);
     }
 };
