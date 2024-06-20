@@ -13,7 +13,6 @@ public:
             dp[i] = max(nums[i]+dp[i-2], dp[i-1]);
         }
 
-        for (auto it:dp) cout<<it<<endl;
         return dp[n-1];
     }
 };
