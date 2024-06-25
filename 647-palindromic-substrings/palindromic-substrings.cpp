@@ -14,7 +14,8 @@ public:
             l=i, r=i+1;
             while (l>=0 && r<=n-1 && s[l] == s[r]) {
                 count++;
-                l--, r++;
+                l--; 
+                r++;
             }
         }
 
