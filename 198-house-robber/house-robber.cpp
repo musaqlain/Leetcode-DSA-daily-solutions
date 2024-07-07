@@ -4,7 +4,6 @@ public:
         const int n = nums.size();
         if (n == 0) return 0;
         if (n==1) return nums[0];
-
         int p1 = 0;
         int p2 = 0;
         int curr = 0;
