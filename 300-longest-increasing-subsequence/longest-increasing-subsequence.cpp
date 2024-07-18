@@ -2,18 +2,19 @@ class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
         const int n = nums.size();
-        vector<vector<int>> dp(n, vector<int>(n+1, -1));
-        return dfs(0, -1, nums, dp, n);
-    }
-    int dfs(int i, int prev, vector<int>& nums, vector<vector<int>>& dp, int n) {
-        if (i == n) return 0;
-        if (dp[i][prev+1] != -1) return dp[i][prev+1];
+        vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
 
-        int len = 0 + dfs(i+1, prev, nums, dp, n);
-        if (prev == -1 || nums[i] > nums[prev]) {
-            len = max(len, 1 + dfs(i+1, i, nums, dp, n));
+        for (int i=n-1; i>=0; i--) {
+            for (int prev=n-1; prev>=-1; prev--) {
+                int len = 0 + dp[i+1][prev+1];
+                if (prev == -1 || nums[i] > nums[prev]) {
+                    len = max(len, 1 + dp[i+1][i+1]);
+                }
+
+                dp[i][prev+1] = len;
+            }
         }
 
-        return dp[i][prev+1] = len;
+        return dp[0][0];
     }
 };
