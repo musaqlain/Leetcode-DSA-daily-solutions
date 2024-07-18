@@ -6,16 +6,10 @@ public:
         return dfs(0, -1, nums, dp);
     }
     int dfs(int i, int prev, vector<int>& nums, vector<vector<int>>& dp) {
-
-        // base
         if (i == nums.size()) return 0;
-
         if (dp[i][prev+1] != -1) return dp[i][prev+1];
 
-        // not take 
         int len = 0 + dfs(i+1, prev, nums, dp);
-
-        // take
         if (prev == -1 || nums[i] > nums[prev]) {
             len = max(len, 1 + dfs(i+1, i, nums, dp));
         }
