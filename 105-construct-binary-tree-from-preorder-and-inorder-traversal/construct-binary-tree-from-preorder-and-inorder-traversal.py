@@ -1,20 +1,22 @@
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        if not preorder or not inorder:
-            return None
-        
-        # Root is the first element in the preorder traversal
-        root_val = preorder.pop(0)
-        root = TreeNode(root_val)
+        hashMap = {val: idx for idx, val in enumerate(inorder)}
+        preOrderIndex = [0]  
 
-        # Find the index of root in the inorder traversal
-        root_index = inorder.index(root_val)
+        def buildBT(preOrderIndex: List[int], inOrderStart: int, inOrderEnd: int) -> Optional[TreeNode]:
+            if inOrderStart > inOrderEnd:
+                return None
 
-        # Recursively construct the left and right subtree
-        root.left = self.buildTree(preorder, inorder[:root_index])
-        root.right = self.buildTree(preorder, inorder[root_index+1:])
+            rootValue = preorder[preOrderIndex[0]]
+            root = TreeNode(rootValue)
 
-        return root
+            inOrderIndex = hashMap[rootValue]
 
+            preOrderIndex[0] += 1
 
-        
+            root.left = buildBT(preOrderIndex, inOrderStart, inOrderIndex - 1)
+            root.right = buildBT(preOrderIndex, inOrderIndex + 1, inOrderEnd)
+
+            return root
+
+        return buildBT(preOrderIndex, 0, len(inorder) - 1)
