@@ -1,22 +1,33 @@
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        # hash inorder
         hashMap = {val: idx for idx, val in enumerate(inorder)}
-        preOrderIndex = [0]  
+        self.preorderIndex = 0
 
-        def buildBT(preOrderIndex: List[int], inOrderStart: int, inOrderEnd: int) -> Optional[TreeNode]:
+        def buildBT(inOrderStart: int, inOrderEnd: int) -> Optional[TreeNode]:
+            # base condition
             if inOrderStart > inOrderEnd:
                 return None
 
-            rootValue = preorder[preOrderIndex[0]]
-            root = TreeNode(rootValue)
+            # find root
+            rootVal = preorder[self.preorderIndex]
+            self.preorderIndex += 1
 
-            inOrderIndex = hashMap[rootValue]
+            # create a tree with that root
+            root = TreeNode(rootVal)
 
-            preOrderIndex[0] += 1
+            # check that root in out hash table
+            inOrderIndex = hashMap[rootVal]
 
-            root.left = buildBT(preOrderIndex, inOrderStart, inOrderIndex - 1)
-            root.right = buildBT(preOrderIndex, inOrderIndex + 1, inOrderEnd)
+            # recursively run at left
+            root.left = buildBT(inOrderStart, inOrderIndex - 1)
+
+            # recursively run at right
+            root.right = buildBT(inOrderIndex + 1, inOrderEnd)
 
             return root
+        
+        return buildBT(0, len(inorder) - 1)
 
-        return buildBT(preOrderIndex, 0, len(inorder) - 1)
+        
+        
