@@ -1,28 +1,23 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        # hash table
-        preMap = {i:[] for i in range(numCourses)}
-        # populate the table
-        for crs, pre in prerequisites:
-            preMap[crs].append(pre)
-
-        visitSet = set()
-        # define dfs function
-        def dfs(crs):
-            # base conditions
-            if crs in visitSet:
-                return False
-            if preMap[crs] == []:
-                return True
+        adj_list = defaultdict(list)
+        indegree = [0] * numCourses
+        
+        # populate ad_list and indegree array
+        for course, prereq in prerequisites:
+            adj_list[prereq].append(course)
+            indegree[course] += 1
+        
+        queue = deque([i for i in range(numCourses) if indegree[i] == 0])
+        processed_courses = 0
+        
+        while queue:
+            course = queue.popleft()
+            processed_courses += 1
             
-            visitSet.add(crs)
-            for pre in preMap[crs]:
-                if not dfs(pre): return False
-            visitSet.remove(crs)
-            preMap[crs] = []
-            return True
-
-        for crs in range(numCourses):
-            if not dfs(crs): return False
-        return True
-
+            for next_course in adj_list[course]:
+                indegree[next_course] -= 1
+                if indegree[next_course] == 0:
+                    queue.append(next_course)
+        
+        return processed_courses == numCourses
