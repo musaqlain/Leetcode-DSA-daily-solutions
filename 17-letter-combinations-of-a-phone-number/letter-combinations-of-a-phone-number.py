@@ -11,28 +11,33 @@ class Solution:
             "9": ["w", "x", "y", "z"]
         }
 
-
-        res = []
+        ans = []
 
         if not digits:
-            return res
-
-        def backtrack(indx, curr_res):
-            if indx == len(digits):
-                res.append("".join(curr_res))
+            return ans
+        
+        # backtrack
+        def backtrack(indx,temp_ans ):
+            # base condition
+            if indx >= len(digits):
+                ans.append("".join(temp_ans))
                 return
 
-            digit = digits[indx]
-            temp_array = phone[digit]
+            # main logic
+            digit = digits[indx] # 2
+            letters = phone[digit]
 
-            for char in temp_array:
-                curr_res.append(char)
-                backtrack(indx+1, curr_res)
-                curr_res.pop()
-        
-        backtrack(0, [])
-        return res
-
-
+            # loop
+            for i in letters:
+                temp_ans.append(i)
+                backtrack(indx+1, temp_ans)
+                temp_ans.pop()
             
+        backtrack(0, [])
         
+        return ans
+
+
+
+
+
