@@ -1,28 +1,30 @@
+from collections import deque
+
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        if endWord not in wordList:
+        # Convert wordList to set for O(1) lookups
+        wordSet = set(wordList)
+        
+        # If endWord is not in wordList, return 0
+        if endWord not in wordSet:
             return 0
 
-        nei = collections.defaultdict(list)
-        wordList.append(beginWord)
-        for word in wordList:
-            for j in range(len(word)):
-                pattern = word[:j] + "*" + word[j + 1 :]
-                nei[pattern].append(word)
+        # Initialize queue for BFS
+        queue = deque([[beginWord, 1]])  # Start with level 1
 
-        visit = set([beginWord])
-        q = deque([beginWord])
-        res = 1
-        while q:
-            for i in range(len(q)):
-                word = q.popleft()
-                if word == endWord:
-                    return res
-                for j in range(len(word)):
-                    pattern = word[:j] + "*" + word[j + 1 :]
-                    for neiWord in nei[pattern]:
-                        if neiWord not in visit:
-                            visit.add(neiWord)
-                            q.append(neiWord)
-            res += 1
-        return 0
+        while queue:
+            word, lvl = queue.popleft()
+
+            # Try changing each letter in the word
+            for i in range(len(word)):
+                for c in 'abcdefghijklmnopqrstuvwxyz':
+                    cp_word = word[:i] + c + word[i + 1:]
+
+                    if cp_word == endWord:
+                        return lvl + 1
+                    
+                    if cp_word in wordSet:
+                        wordSet.remove(cp_word)  # Mark as visited
+                        queue.append([cp_word, lvl + 1])
+        
+        return 0  # No transformation sequence found
