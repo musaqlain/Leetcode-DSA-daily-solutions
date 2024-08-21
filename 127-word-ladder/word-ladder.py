@@ -1,13 +1,13 @@
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        # change wordList to set
+        # wordList -> set
         wordSet = set(wordList)
 
         if endWord not in wordSet:
             return 0
 
-        # queue
-        queue = deque([[beginWord, 1]])
+        # initialize queue [[begin, 1]]
+        queue = collections.deque([[beginWord, 1]])
 
         while queue:
             word, lvl = queue.popleft()
@@ -17,9 +17,14 @@ class Solution:
                     cp_word = word[:i] + c + word[i+1:]
 
                     if cp_word == endWord:
-                        return lvl + 1
+                        return lvl+1
                     if cp_word in wordSet:
                         wordSet.remove(cp_word)
-                        queue.append([cp_word, lvl + 1])
+                        queue.append([cp_word, lvl+1])
 
         return 0
+
+
+
+
+        
