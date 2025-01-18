@@ -1,18 +1,19 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        # create 2D rec
-        rec = [[0]*n for _ in range(m)]
+        # 2d
+        record = [[0] * n for _ in range(m)]
 
-        # last row and last col -> 1
-        for r in range(m):
-            rec[r][n-1] = 1
-        for c in range(n):
-            rec[m-1][c] = 1
+        def rec(r, c):
+            # base
+            if r==m-1 and c==n-1:
+                return 1
+            if r<0 or r>=m or c < 0 or c>=n:
+                return 0
+            
+            if record[r][c] != 0:
+                return record[r][c]
+            # explore the possible ways
+            record[r][c] = rec(r+1, c)+rec(r, c+1)
+            return record[r][c]
 
-        # loop from last to first
-            # and calculate total num of ways
-        for i in range(m-2, -1, -1): # row
-            for j in range(n-2, -1, -1): # col
-                rec[i][j] = rec[i+1][j] + rec[i][j+1]
-
-        return rec[0][0]
+        return rec(0, 0) # record[0][0]
