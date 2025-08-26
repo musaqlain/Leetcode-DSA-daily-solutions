@@ -18,7 +18,7 @@ class Solution:
                 # return []
             if crs in cycle:
                 return False
-            if crs in visit:
+            if crs in output:
                 return True
             # then we will continue forward
 
@@ -29,7 +29,6 @@ class Solution:
                 if dfs(pre) == False:
                     return False
             cycle.remove(crs)
-            visit.add(crs)
             output.append(crs)
             return True
 
