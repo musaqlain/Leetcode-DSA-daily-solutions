@@ -1,28 +1,41 @@
 class Solution:
-    def findOrder(self, nums: int, preq: List[List[int]]) -> List[int]:
-        adj_list = defaultdict(list)
-        indegree = [0] * nums
-
-        for crs, p in preq:
-            adj_list[p].append(crs)
-            indegree[crs] += 1
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        preReqTable = {c:[] for c in range(numCourses)}
+        # populate these empty arrays
+        for crs, preq in prerequisites:
+            preReqTable[crs].append(preq)
         
-        q = deque([i for i in range(nums) if indegree[i] == 0])
+        cycle, visit = set(), set()
+        output = []
 
-        # Kahn's Algo
-        ans = []
+        # visted
+        # visiting
+        # untouched
 
-        while q:
-            crs = q.popleft()
-            ans.append(crs)
+        def dfs(crs):
+            # base condition
+            # if cycle exists
+                # return []
+            if crs in cycle:
+                return False
+            if crs in visit:
+                return True
+            # then we will continue forward
 
-            for n in adj_list[crs]:
-                indegree[n] -= 1
-                if indegree[n] == 0:
-                    q.append(n)
+            # we will add out crs
+            cycle.add(crs)
 
-        # Check if the entire graph has been processed
-        if len(ans) == nums:
-            return ans
-        else:
-            return []
+            for pre in preReqTable[crs]:
+                if dfs(pre) == False:
+                    return False
+            cycle.remove(crs)
+            visit.add(crs)
+            output.append(crs)
+            return True
+
+        for crs in range(numCourses):
+            if dfs(crs) == False:
+                    return []
+        return output
+
+        
