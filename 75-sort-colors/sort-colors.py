@@ -4,7 +4,6 @@ class Solution:
         Do not return anything, modify nums in-place instead.
         """
         count = [0] * 3
-        n = len(nums)
 
         for i in nums:
             count[i] += 1
