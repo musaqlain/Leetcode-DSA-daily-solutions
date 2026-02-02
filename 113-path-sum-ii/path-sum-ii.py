@@ -16,12 +16,12 @@ class Solution:
             sm += node.val
             # tmp = path + [node.val] #deep copy
             path.append(node.val)
+            if not node.left and not node.right and sm == targetSum:
+                self.ans.append(list(path))
             if node.left:
                 dfs(node.left, path, sm)
             if node.right:
                 dfs(node.right, path, sm)
-            if not node.left and not node.right and sm == targetSum:
-                self.ans.append(list(path))
             path.pop()
             
 
