@@ -23,7 +23,9 @@ class Solution:
             if node.right:
                 dfs(node.right, path, sm)
             path.pop()
-            
 
         dfs(root, [], 0) # root, pathArray, sum
         return self.ans
+
+# deep copy
+# array/ object reference based 
